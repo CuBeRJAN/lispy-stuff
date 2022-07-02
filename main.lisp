@@ -14,7 +14,7 @@
   "Return a list of command line arguments."
   (or
    #+CLISP *args*
-   #+SBCL *posix-argv*
+   #+SBCL (cdr *posix-argv*)
    #+LISPWORKS system:*line-arguments-list*
    #+CMU extensions:*command-line-words*
    nil))
@@ -45,10 +45,15 @@ is replaced with replacement."
 (defun run-cmd (cmd)
   (uiop:run-program cmd))
 
-(defun get-argv-string ()
-  "Returns command line arguments as a space-separated string."
-  (let ((fstr (make-array '(0) :element-type 'base-char
-                               :fill-pointer 0 :adjustable t)))
-    (with-output-to-string (s fstr)
-      (format s "~{~A~^ ~}" (get-argv)))
+(defun list-to-string (data separator)
+  "Convert a list of strings into a single string."
+  (let ((fstr ""))
+    (loop for i from 0 to (- (length data) 1) do
+      (setq fstr (concatenate 'string fstr (nth i data) separator)))
     fstr))
+
+(defun sbcl-compile-executable (func out)
+  "Compile a function into an executable."
+  (sb-ext:save-lisp-and-die out
+                            :executable t
+                            :toplevel func))
