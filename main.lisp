@@ -27,7 +27,7 @@
   (let ((fstr (make-array '(0) :element-type 'base-char
                                :fill-pointer 0 :adjustable t)))
     (with-output-to-string (s fstr)
-      (format s "~{~A~^, ~}" (cdr *posix-argv*)))
+      (format s "~{~A~^ ~}" (cdr *posix-argv*)))
     fstr))
 
 
