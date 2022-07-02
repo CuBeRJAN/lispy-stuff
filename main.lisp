@@ -10,6 +10,15 @@
     (when (probe-file quicklisp-init)
       (load quicklisp-init))))
 
+(defun get-argv ()
+  "Return a list of command line arguments."
+  (or
+   #+CLISP *args*
+   #+SBCL *posix-argv*
+   #+LISPWORKS system:*line-arguments-list*
+   #+CMU extensions:*command-line-words*
+   nil))
+
 (defun replace-substring (string part replacement &key (test #'char=))
   "Returns a new string in which all the occurences of the part
 is replaced with replacement."
@@ -41,9 +50,5 @@ is replaced with replacement."
   (let ((fstr (make-array '(0) :element-type 'base-char
                                :fill-pointer 0 :adjustable t)))
     (with-output-to-string (s fstr)
-      (format s "~{~A~^ ~}" (cdr *posix-argv*)))
+      (format s "~{~A~^ ~}" (get-argv)))
     fstr))
-
-
-(format t "~a~%" (get-argv-string))
-(format t "~a~%" (cdr *posix-argv*))
