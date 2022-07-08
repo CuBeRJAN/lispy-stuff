@@ -2,6 +2,9 @@
 (require "asdf")
 
 
+(defmacro remove-nth (index data)
+  `(append (subseq ,data 0 ,index) (subseq ,data (+ ,index 1))))
+
 (defun load-quicklisp ()
   "Initialize quicklisp."
   #-quicklisp
