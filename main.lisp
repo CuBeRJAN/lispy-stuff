@@ -1,9 +1,11 @@
-#!/usr/bin/sbcl --script
 (require "asdf")
 
 
-(defmacro remove-nth (index data)
-  `(append (subseq ,data 0 ,index) (subseq ,data (+ ,index 1))))
+(defun remove-nth (index data)
+  "Remove element from list by index."
+  (if (zerop index)
+      (cdr data)
+      (cons (car data) (remove-nth (1- index) (cdr data)))))
 
 (defun load-quicklisp ()
   "Initialize quicklisp."
