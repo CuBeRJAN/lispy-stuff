@@ -7,6 +7,14 @@
       (cdr data)
       (cons (car data) (remove-nth (1- index) (cdr data)))))
 
+(defun delete-nth (i seq)
+  "Delete nth element from sequence."
+  (let ((slide (subseq seq (1+ i)))
+        (num (1- (fill-pointer seq))))
+    (replace seq slide :start1 i)
+    (adjust-array seq num
+                  :fill-pointer num)))
+
 (defun load-quicklisp ()
   "Initialize quicklisp."
   #-quicklisp
