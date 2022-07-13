@@ -27,9 +27,13 @@
   (let ((data (reverse args)))
     (labels ((getlist (funcs)
                (if (cdr funcs)
-                   (append (car funcs) (list (getlist (cdr funcs))))
+                   (if (listp (car funcs))
+                       (append (car funcs) (list (getlist (cdr funcs))))
+                       (append (list (car funcs)) (list (getlist (cdr funcs)))))
                    (car funcs))))
       (getlist data))))
+
+(write (macroexpand '(->> c (+ 3) (/ 2) (- 1))))
 
 (defun remove-nth (index data)
   "Remove element from list by index."
