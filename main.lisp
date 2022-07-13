@@ -9,6 +9,15 @@
                  (list (car funcs)))))
     (getlist data)))
 
+(defmacro ->> (&rest args)
+  "Call a list of functions in order."
+  (let ((data (reverse args)))
+    (labels ((getlist (funcs)
+               (if (cdr funcs)
+                   (append (car funcs) (list (getlist (cdr funcs))))
+                   (car funcs))))
+      (getlist data))))
+
 (defun remove-nth (index data)
   "Remove element from list by index."
   (if (zerop index)
