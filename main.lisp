@@ -33,8 +33,6 @@
                    (car funcs))))
       (getlist data))))
 
-(write (macroexpand '(->> c (+ 3) (/ 2) (- 1))))
-
 (defun remove-nth (index data)
   "Remove element from list by index."
   (if (zerop index)
