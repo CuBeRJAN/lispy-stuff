@@ -9,7 +9,7 @@
                               (cons (car funcs) (list (nested-call-getlist (cdr funcs))))
                               (list (car funcs)))))
                  (nested-call-getlist funcs))))
-           (getlist data))
+           (getlist data)))
 
 
 (defun remove-nth (index data)
@@ -80,5 +80,3 @@ is replaced with replacement."
   (sb-ext:save-lisp-and-die out
                             :executable t
                             :toplevel func))
-
-(write (join-strings '("hello" "world" "morning" "sirs") " "))
