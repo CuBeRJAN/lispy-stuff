@@ -9,8 +9,7 @@
                               (cons (car funcs) (list (nested-call-getlist (cdr funcs))))
                               (list (car funcs)))))
                  (nested-call-getlist funcs))))
-           (let ((cmd (getlist data)))
-              cmd)))
+           (getlist data))
 
 
 (defun remove-nth (index data)
