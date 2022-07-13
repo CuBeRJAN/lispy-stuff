@@ -61,8 +61,14 @@ is replaced with replacement."
 (defun list-to-string (data separator)
   "Convert a list of strings into a single string."
   (let ((fstr ""))
-    (loop for i from 0 to (- (length data) 1) do
-      (setq fstr (concatenate 'string fstr (nth i data) separator)))
+    (loop
+      (if (cdr data)
+          (progn
+            (setq fstr (concatenate 'string fstr (car data) separator))
+            (setf data (cdr data)))
+          (progn
+            (setq fstr (concatenate 'string fstr (car data)))
+            (return))))
     fstr))
 
 (defun sbcl-compile-executable (func out)
