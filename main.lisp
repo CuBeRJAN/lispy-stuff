@@ -6,11 +6,12 @@
   (labels ((getlist (funcs)
                (labels ((nested-call-getlist (funcs)
                           (if (cdr funcs)
-                              (append (list (car funcs)) (list (nested-call-getlist (cdr funcs))))
+                              (cons (car funcs) (list (nested-call-getlist (cdr funcs))))
                               (list (car funcs)))))
                  (nested-call-getlist funcs))))
            (let ((cmd (getlist data)))
               cmd)))
+
 
 (defun remove-nth (index data)
   "Remove element from list by index."
