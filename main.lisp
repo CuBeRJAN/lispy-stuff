@@ -58,9 +58,10 @@ is replaced with replacement."
 (defun run-cmd (cmd)
   (uiop:run-program cmd))
 
-(defun join-strings (data separator)
+(defun join-strings (data &key (separator " "))
+  "Convert a list of strings into a single string."
   (if (cdr data)
-      (concatenate 'string (car data) separator (join-strings (cdr data) separator))
+      (concatenate 'string (car data) separator (join-strings (cdr data) :separator separator))
       (car data)))
 
 (defun sbcl-compile-executable (func out)
