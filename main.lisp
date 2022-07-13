@@ -4,13 +4,10 @@
 (defmacro nested-call (&rest data)
   "Call a list of functions as nested."
   (labels ((getlist (funcs)
-               (labels ((nested-call-getlist (funcs)
-                          (if (cdr funcs)
-                              (cons (car funcs) (list (nested-call-getlist (cdr funcs))))
-                              (list (car funcs)))))
-                 (nested-call-getlist funcs))))
-           (getlist data)))
-
+             (if (cdr funcs)
+                 (cons (car funcs) (list (getlist (cdr funcs))))
+                 (list (car funcs)))))
+    (getlist data)))
 
 (defun remove-nth (index data)
   "Remove element from list by index."
