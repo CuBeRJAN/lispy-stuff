@@ -58,21 +58,15 @@ is replaced with replacement."
 (defun run-cmd (cmd)
   (uiop:run-program cmd))
 
-(defun list-to-string (data separator)
-  "Convert a list of strings into a single string."
-  (let ((fstr ""))
-    (loop
-      (if (cdr data)
-          (progn
-            (setq fstr (concatenate 'string fstr (car data) separator))
-            (setf data (cdr data)))
-          (progn
-            (setq fstr (concatenate 'string fstr (car data)))
-            (return))))
-    fstr))
+(defun join-strings (data separator)
+  (if (cdr data)
+      (concatenate 'string (car data) separator (join-strings (cdr data) separator))
+      (car data)))
 
 (defun sbcl-compile-executable (func out)
   "Compile a function into an executable."
   (sb-ext:save-lisp-and-die out
                             :executable t
                             :toplevel func))
+
+(write (join-strings '("hello" "world" "morning" "sirs") " "))
