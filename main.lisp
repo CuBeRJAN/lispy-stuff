@@ -9,6 +9,19 @@
                  (list (car funcs)))))
     (getlist data)))
 
+;; This macro is inspired by clojure
+(defmacro -> (&rest args)
+  "Call a list of functions in order."
+  (let ((data (reverse args)))
+    (labels ((getlist (funcs)
+               (if (cadr funcs)
+                   (if (listp (car funcs))
+                       (append (list (caar funcs)) (list (getlist (cdr funcs))) (cdar funcs))
+                       (append (list (car funcs)) (list (getlist (cdr funcs)))))
+                   (car funcs))))
+      (getlist data))))
+
+;; This one too
 (defmacro ->> (&rest args)
   "Call a list of functions in order."
   (let ((data (reverse args)))
