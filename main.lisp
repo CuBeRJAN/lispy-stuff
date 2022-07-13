@@ -1,6 +1,17 @@
 (require "asdf")
 
 
+(defmacro nested-call (data)
+  "Call a list of functions as nested."
+  (labels ((getlist (funcs)
+               (labels ((nested-call-getlist (funcs)
+                          (if (cdr funcs)
+                              (append (list (car funcs)) (list (nested-call-getlist (cdr funcs))))
+                              (list (car funcs)))))
+                 (nested-call-getlist funcs))))
+           (let ((cmd (getlist data)))
+              (cadr cmd))))
+
 (defun remove-nth (index data)
   "Remove element from list by index."
   (if (zerop index)
