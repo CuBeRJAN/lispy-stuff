@@ -4,12 +4,18 @@
 (import 'uiop:split-string 'CL-USER)
 
 
-(defmacro nested-call (&rest data)
+(defmacro take (n &key (start 0))
+  "Take a list of n values"
+  `(loop for i from ,start to (+ ,start ,n) collect i))
+
+(defmacro --> (&rest data)
   "Call a list of functions as nested."
   (labels ((getlist (funcs)
              (if (cdr funcs)
                  (cons (car funcs) (list (getlist (cdr funcs))))
-                 (list (car funcs)))))
+                 (if (listp (car funcs))
+                     (car funcs)
+                     (list (car funcs))))))
     (getlist data)))
 
 ;; This macro is inspired by clojure
