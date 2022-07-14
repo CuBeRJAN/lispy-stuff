@@ -1,4 +1,7 @@
 (require "asdf")
+(require 'uiop)
+
+(import 'uiop:split-string 'CL-USER)
 
 
 (defmacro nested-call (&rest data)
