@@ -44,9 +44,11 @@
 
 (defun remove-nth (index data)
   "Remove element from list by index."
-  (if (zerop index)
-      (cdr data)
-      (cons (car data) (remove-nth (1- index) (cdr data)))))
+  (labels ((remove-nth-tail (index data final)
+             (if (= index 0)
+                 (append (reverse final) (cdr data))
+                 (remove-nth-tail (1- index) (cdr data) (cons (car data) final)))))
+    (remove-nth-tail index data nil)))
 
 (defun delete-nth (i seq)
   "Delete nth element from sequence."
@@ -101,9 +103,11 @@ is replaced with replacement."
 
 (defun join-strings (data &key (separator " "))
   "Convert a list of strings into a single string."
-  (if (cdr data)
-      (concatenate 'string (car data) separator (join-strings (cdr data) :separator separator))
-      (car data)))
+  (labels ((join-strings-tail (data separator final)
+             (if (cdr data)
+                 (join-strings-tail (cdr data) separator (concatenate 'string final (car data) separator))
+                 (concatenate 'string final (car data)))))
+    (join-strings-tail data separator nil)))
 
 (defun sbcl-compile-executable (func out)
   "Compile a function into an executable."
