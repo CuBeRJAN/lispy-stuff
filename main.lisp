@@ -46,7 +46,7 @@
   "Remove element from list by index."
   (labels ((remove-nth-tail (index data final)
              (if (= index 0)
-                 (append (reverse final) (cdr data))
+                 (reverse (cons (cadr data) final))
                  (remove-nth-tail (1- index) (cdr data) (cons (car data) final)))))
     (remove-nth-tail index data nil)))
 
