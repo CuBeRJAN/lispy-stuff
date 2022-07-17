@@ -45,10 +45,10 @@
 (defun remove-nth (index data)
   "Remove element from list by index."
   (labels ((remove-nth-tail (index data final)
-             (if (= index 0)
-                 (if (not (cadr data))
+             (if (zerop index)
+                 (if (not (cdr data))
                      (reverse final)
-                     (reverse (cons (cadr data) final)))
+                     (revappend final (cdr data)))
                  (remove-nth-tail (1- index) (cdr data) (cons (car data) final)))))
     (remove-nth-tail index data nil)))
 
