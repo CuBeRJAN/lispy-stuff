@@ -6,7 +6,7 @@
 
 (defmacro take (n &key (start 0))
   "Take a list of n values"
-  `(loop for i from ,start to (+ ,start ,n) collect i))
+  `(loop for i from ,start to (+ ,start (1- ,n)) collect i))
 
 (defmacro --> (&rest data)
   "Call a list of functions as nested."
