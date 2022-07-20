@@ -103,6 +103,9 @@ is replaced with replacement."
 (defun run-cmd (cmd)
   (uiop:run-program cmd))
 
+(defun run-cmd-with-output (cmd)
+  (uiop:run-program cmd :output t))
+
 (defun join-strings (data &key (separator " "))
   "Convert a list of strings into a single string."
   (labels ((join-strings-tail (data separator final)
