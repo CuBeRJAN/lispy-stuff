@@ -94,7 +94,7 @@ is replaced with replacement."
 
 (defun get-cmd-output (cmd)
   "Returns output of shell command as a string."
-  (let ((fstr (make-array '(0) :element-type 'base-char
+  (let ((fstr (make-array '(0) :element-type 'character
                                :fill-pointer 0 :adjustable t)))
     (with-output-to-string (s fstr)
       (uiop:run-program cmd :output s))
