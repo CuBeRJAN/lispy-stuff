@@ -4,6 +4,9 @@
 (import 'uiop:split-string 'CL-USER)
 
 
+(defun cls ()
+  (format t "~A[H~@*~A[J" #\escape))
+
 (defmacro make-vector (&aux type)
   "Create a resizable array"
   (if type
