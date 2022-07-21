@@ -4,9 +4,11 @@
 (import 'uiop:split-string 'CL-USER)
 
 
-(defmacro make-vector (type)
+(defmacro make-vector (&aux type)
   "Create a resizable array"
-  `(make-array 0 :fill-pointer 0 :adjustable t :element-type ,type))
+  (if type
+    `(make-array 0 :fill-pointer 0 :adjustable t :element-type ,type)
+    `(make-array 0 :fill-pointer 0 :adjustable t)))
 
 (defmacro take (n &key (start 0))
   "Take a list of n values"
