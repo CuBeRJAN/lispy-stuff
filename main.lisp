@@ -4,6 +4,10 @@
 (import 'uiop:split-string 'CL-USER)
 
 
+(defmacro make-vector (type)
+  "Create a resizable array"
+  `(make-array 0 :fill-pointer 0 :adjustable t :element-type ,type))
+
 (defmacro take (n &key (start 0))
   "Take a list of n values"
   `(loop for i from ,start to (+ ,start (1- ,n)) collect i))
@@ -41,6 +45,17 @@
                        (append (list (car funcs)) (list (getlist (cdr funcs)))))
                    (car funcs))))
       (getlist data))))
+
+(defun vector-push-resize (var vec)
+  "Push to the end of vector."
+  (adjust-array vec (1+ (array-dimension vec 0)))
+  (vector-push var vec))
+
+(defun vector-append (vec1 vec2)
+  "Append vector to the end of another vector"
+  (adjust-array vec1 (+ (array-dimension vec1 0) (array-dimension vec2 0)))
+  (dotimes (n (array-dimension vec2 0))
+    (vector-push (aref vec2 n) vec1)))
 
 (defun remove-nth (index data)
   "Remove element from list by index."
